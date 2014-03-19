@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="Parking">
+<head>
+    <title>Parking availability</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css"/>
+
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/ui-bootstrap-tpls-0.7.0.min.js"></script>
+    <script type="text/javascript" src="/js/application.js"></script>
+</head>
+<body ng-controller="TableController">
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="http://vattenfall.com"> Vattenfall IT Services Poland </a>
+        </div>
+        <button class="btn" ng-click="open()">Add holder</button>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <span class="span6">
+        <table class="table table-condensed table-bordered">
+            <caption><h2>Parking availability</h2></caption>
+            <thead>
+            <tr>
+                <th style="width: 14%">#</th>
+                <th style="width: 43%">Holder</th>
+                <th style="width: 43%">Temp Holder</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="parking in parkingInformation">
+                <td ng-if="!parking.booked">
+                    <span ng-click="booking(parking)" class="label btn btn-success booking">Available</span>
+                </td>
+                <td ng-if="parking.booked">
+                    <span class="label label-important">Booked</span></td>
+                </td>
+                <td>{{parking.holder}}</td>
+                <td>{{parking.tempHolder}}</td>
+            </tr>
+            </tbody>
+        </table>
+        </span>
+        <script type="text/ng-template" id="holder">
+            <form ng-submit="submit()" style="margin: 0 0 0;">
+                <div class="modal-body" style="text-align: center;">
+                    <input type="text" ng-model="holder.name"/>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button class="btn" ng-click="cancel()">Cancel</button>
+                    <input type="submit" class="btn primary-btn btn-success" value="Submit" />
+                </div>
+            </form>
+        </script>
+    </div>
+</div>
+</body>
+</html>
