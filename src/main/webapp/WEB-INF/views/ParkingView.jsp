@@ -20,23 +20,32 @@
 </head>
 <body>
 <div class="container">
-    <h1>Parking Site</h1>
-     <span class="span6">
-     <table class="table table-condensed table-bordered">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Parking schedule for this month</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed table-bordered">
         <c:forEach items="${map}" var="entry">
         <tr>
            <td class="bordered">
-           <c:out value="${entry.key.username}" /></td>
+           <c:out value="${entry.key.username}" />
+           </td>
            <c:forEach items="${entry.value}" var="day">
            <td class="bordered">
                <c:out value="${day.date}" /> <br>
+               <span class="label label-primary">
                <c:out value="${day.dayState}" />
+               </span> <br>
+               <input type="checkbox">
            </td>
            </c:forEach>
         </tr>
         </c:forEach>
     </table>
-    </span>
+      </div>
+    </div>
+
 </div>
 </body>
 </html>
