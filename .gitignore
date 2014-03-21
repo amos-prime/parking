@@ -1,0 +1,15 @@
+.classpath
+.project
+
+*.class
+.settings/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+*.tmp
+/target/*
+/target
+/src/main/webapp/VAADIN/widgetsets
