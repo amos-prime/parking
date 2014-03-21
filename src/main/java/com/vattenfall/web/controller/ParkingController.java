@@ -10,9 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by amoss on 06.02.14.
@@ -28,11 +26,8 @@ public class ParkingController {
     @RequestMapping(value = "/parking", method = RequestMethod.GET)
     public String showParking(ModelMap model) {
         List<User> holders = parkingService.getAllHolders();
-        HashMap<User, Set<ParkingDay>> holdersAndDays = new HashMap<User, Set<ParkingDay>>();
-        for (User holder : holders) {
-            holdersAndDays.put(holder, holder.getParkingDays());
-        }
-        model.addAttribute("map", holdersAndDays);
+
+        model.addAttribute("holders", holders);
         return "ParkingView";
     }
 
