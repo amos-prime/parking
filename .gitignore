@@ -1,8 +1,10 @@
+.*
 .classpath
 .project
-
+.idea
 *.class
 .settings/
+.iml
 
 # Package Files #
 *.jar
@@ -13,3 +15,6 @@
 /target/*
 /target
 /src/main/webapp/VAADIN/widgetsets
+
+# Database Files #
+mydb*.*
