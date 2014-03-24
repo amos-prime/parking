@@ -25,6 +25,9 @@
         <module name="parking" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="parking" target="1.6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
