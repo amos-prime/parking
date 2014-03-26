@@ -1,113 +1,116 @@
-package persistence;
+package services;
 
-import com.vattenfall.configuration.PersistenceConfig;
 import com.vattenfall.configuration.ServicesConfig;
+import com.vattenfall.configuration.PersistenceConfig;
 import com.vattenfall.model.Reservation;
 import com.vattenfall.model.User;
 import com.vattenfall.model.UserStatus;
-import com.vattenfall.repository.ReservationRepository;
-import com.vattenfall.repository.UserRepository;
+import com.vattenfall.services.ReservationService;
+import com.vattenfall.services.UserService;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Created by amoss on 11.03.14.
+ * Created by amoss on 29.01.14.
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, ServicesConfig.class})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-public class JPARepositoriesTest {
-    @Autowired
-    private ReservationRepository reservationRepository;
+public class ReservationServiceTest {
 
     @Autowired
-    private UserRepository userRepository;
+    @Qualifier(value = "reservationService")
+    private ReservationService reservationService;
+    @Autowired
+    @Qualifier(value = "userService")
+    private UserService userService;
+    @Autowired
+    @Qualifier(value = "dataSource")
+    private DataSource dataSource;
 
     DateTime date = new DateTime().withDate(2014, 1, 1);
+    DateTime anotherDate = new DateTime().withDate(2014, 1, 2);
 
     @Test
     public void integrationTest() {
-        assertTrue(reservationRepository != null);
+        assertTrue(reservationService != null);
+        assertTrue(userService != null);
+        assertTrue(dataSource != null);
     }
 
     @Test
-    public void reservationRepositoryCreate() {
+    public void reservationServiceCreate() {
         Reservation res = getTestReservation();
         assertTrue(res.getId() != 0);
     }
 
     @Test
-    public void reservationRepositoryDelete() {
+    public void reservationServiceDelete() {
         Reservation res = getTestReservation();
         long id = res.getId();
         try {
-            reservationRepository.delete(id);
+            reservationService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);
         }
         try {
-            reservationRepository.findOne(id);
+            res = reservationService.findById(id);
         } catch (Exception e) {
             assertTrue(true);
         }
     }
 
     @Test
-    public void reservationRepositoryFindAll() {
+    public void reservationServiceFindAll() {
         Reservation res = getTestReservation();
-        List<Reservation> reservations = reservationRepository.findAll();
-        assertTrue(reservations.size() == 1);
+        Reservation res2 = new Reservation(anotherDate, getUser());
+        reservationService.create(res2);
+
+        List<Reservation> reservations = reservationService.findAll();
+        assertTrue(reservations.size() == 2);
     }
 
     @Test
-    public void reservationRepositoryFindById() {
+    public void reservationServiceFindAllFast() {
+        List<Reservation> res = reservationService.findAll();
+    }
+
+    @Test
+    public void reservationServiceFindById() {
         Reservation res = getTestReservation();
-        Reservation fetchedDay = reservationRepository.findOne(res.getId());
-        assertTrue(fetchedDay != null);
-        assertTrue(res.getId() == fetchedDay.getId());
+        Reservation fetchedRes = null;
+        try {
+            fetchedRes = reservationService.findById(res.getId());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+        assertTrue(fetchedRes != null);
+        assertTrue(res.getId() == fetchedRes.getId());
     }
 
     @Test
     public void rollbackTest() {
-        List<Reservation> reservations = reservationRepository.findAll();
-        assertTrue(reservations.size() == 0);
-    }
-
-    @Test
-    public void  reservationEagerFetching() {
-        Reservation res = getTestReservation();
-        Reservation fetchedRes = null;
-        try {
-            fetchedRes = reservationRepository.findOne(res.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue(res.getHolder().getId() == fetchedRes.getHolder().getId());
-    }
-
-    @Test
-    public void userRepositorySave() {
-        User user = new User();
-        user.setUsername("Username");
-        user.setPassword("Pass");
-        userRepository.save(user);
+        List<Reservation> res = reservationService.findAll();
+        assertTrue(res.size() == 0);
     }
 
     private Reservation getTestReservation(){
-        return reservationRepository.save(new Reservation(date, getUser()));
+        return reservationService.create(new Reservation(date, getUser()));
     }
 
     private User getUser() {
@@ -115,7 +118,6 @@ public class JPARepositoriesTest {
         user.setUsername("UserName");
         user.setPassword("pass");
         user.setStatus(UserStatus.HOLDER);
-        return userRepository.save(user);
+        return userService.create(user);
     }
-
 }

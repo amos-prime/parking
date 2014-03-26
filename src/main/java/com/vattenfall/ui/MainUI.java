@@ -2,7 +2,6 @@ package com.vattenfall.ui;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
@@ -10,12 +9,9 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vattenfall.model.DayState;
-import com.vattenfall.model.ParkingDay;
 import com.vattenfall.model.User;
 import com.vattenfall.model.UserStatus;
 import com.vattenfall.services.UserService;
-import org.joda.time.DateTime;
 
 /**
  * Main UI

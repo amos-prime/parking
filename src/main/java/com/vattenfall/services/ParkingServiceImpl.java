@@ -1,7 +1,6 @@
 package com.vattenfall.services;
 
-import com.vattenfall.model.DayState;
-import com.vattenfall.model.ParkingDay;
+import com.vattenfall.model.Reservation;
 import com.vattenfall.model.User;
 import com.vattenfall.model.UserStatus;
 import org.joda.time.DateTime;
@@ -24,7 +23,7 @@ public class ParkingServiceImpl implements ParkingService {
     private UserService userService;
 
     @Autowired
-    private ParkingDayService parkingDayService;
+    private ReservationService reservationService;
 
     @Override
     public List<User> getAllHolders() {
@@ -44,19 +43,10 @@ public class ParkingServiceImpl implements ParkingService {
 
     public void initData() {
         for (int i = 1; i < 5; i++) {
-            TreeSet<ParkingDay> days = new TreeSet<ParkingDay>();
-            for (int d = 1; d < 30; d++) {
-                ParkingDay day = new ParkingDay();
-                day.setDate(new DateTime().withDate(2014, 3, d));
-                day.setDayState(DayState.HOLDED);
-                day = parkingDayService.create(day);
-                days.add(day);
-            }
             User user = new User();
             user.setUsername("User" + i);
             user.setPassword("pass");
             user.setStatus(UserStatus.HOLDER);
-            user.setParkingDays(days);
             userService.create(user);
         }
     }

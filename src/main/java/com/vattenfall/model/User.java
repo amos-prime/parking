@@ -1,27 +1,23 @@
 package com.vattenfall.model;
 
 
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
-
 import javax.persistence.*;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by amoss on 20.12.13.
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "USERS")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     private long id;
 
-    @OneToMany(mappedBy = "holder", fetch = FetchType.EAGER)
-    @Sort(type = SortType.NATURAL)
-    private SortedSet<ParkingDay> parkingDays = new TreeSet<ParkingDay>();
+   // @OneToMany(fetch = FetchType.EAGER, mappedBy = "holder")
+   // private Set<Reservation> reservations = new HashSet<Reservation>(0);
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -33,17 +29,18 @@ public class User {
     public User() {}
 
     //Getters & Setters
-        public long getId() {
+
+    public long getId() {
         return id;
     }
 
-    public SortedSet<ParkingDay> getParkingDays() {
-        return parkingDays;
+    /*public Set<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setParkingDays(SortedSet<ParkingDay> parkingDays) {
-        this.parkingDays = parkingDays;
-    }
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }*/
 
     public UserStatus getStatus() {
         return status;
@@ -77,7 +74,7 @@ public class User {
         this.points = points;
     }
 
-    public void addParkingDay(ParkingDay parkingDay) {
-        parkingDays.add(parkingDay);
-    }
+ /*   public void addParkingDay(Reservation day) {
+        reservations.add(day);
+    }*/
 }

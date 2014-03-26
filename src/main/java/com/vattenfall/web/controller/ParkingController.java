@@ -1,6 +1,5 @@
 package com.vattenfall.web.controller;
 
-import com.vattenfall.model.ParkingDay;
 import com.vattenfall.model.User;
 import com.vattenfall.services.ParkingService;
 import org.apache.log4j.Logger;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 

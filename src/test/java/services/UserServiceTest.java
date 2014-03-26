@@ -1,15 +1,12 @@
 package services;
 
-import com.vattenfall.configuration.ServicesConfig;
 import com.vattenfall.configuration.PersistenceConfig;
+import com.vattenfall.configuration.ServicesConfig;
 import com.vattenfall.exceptions.UserNotFound;
-import com.vattenfall.model.DayState;
-import com.vattenfall.model.ParkingDay;
 import com.vattenfall.model.User;
 import com.vattenfall.model.UserStatus;
-import com.vattenfall.services.ParkingDayService;
+import com.vattenfall.services.ReservationService;
 import com.vattenfall.services.UserService;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +20,11 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 
+
 /**
  * Created by amoss on 23.01.14.
  */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, ServicesConfig.class})
 @Transactional
@@ -36,7 +35,7 @@ public class UserServiceTest {
     @Autowired
     UserService userService;
     @Autowired
-    ParkingDayService parkingDayService;
+    ReservationService reservationService;
     User USER;
 
     public void before() {
@@ -187,40 +186,5 @@ public class UserServiceTest {
         }
     }
 
-    @Test
-    public void fetchingUserEager() {
-        User tmpHolder = new User();
-        tmpHolder.setUsername("tmpHolder");
-        tmpHolder.setPassword("123");
-        tmpHolder.setStatus(UserStatus.REGULAR);
-        tmpHolder = userService.create(tmpHolder);
-
-        ParkingDay day1 = new ParkingDay();
-        day1.setDate(new DateTime().withDate(2014, 01, 02));
-        day1.setDayState(DayState.HOLDED);
-        ParkingDay day2 = new ParkingDay();
-        day2.setDate(new DateTime().withDate(2014, 01, 01));
-        day2.setDayState(DayState.HOLDED);
-        day2.setTempHolder(tmpHolder);
-        parkingDayService.create(day1);
-        parkingDayService.create(day2);
-
-        User user = new User();
-        user.setUsername("EagerUser");
-        user.setPassword("ppp");
-        user.addParkingDay(day1);
-        user.addParkingDay(day2);
-        user = userService.create(user);
-        long userId = user.getId();
-
-        user = null;
-        try {
-            user = userService.findById(userId);
-        } catch (UserNotFound userNotFound) {
-            userNotFound.printStackTrace();
-        }
-        assertTrue(user.getParkingDays().size() == 2);
-        assertTrue(user.getParkingDays().first().getTempHolder().getUsername().equals("tmpHolder"));
-    }
-
 }
+
