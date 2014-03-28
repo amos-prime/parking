@@ -26,7 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(long id) throws Exception {
+    public void delete(long id) {
         Reservation dayForDelete = reservationRepository.findOne(id);
         reservationRepository.delete(dayForDelete);
     }
@@ -39,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Reservation update(Reservation reservation) throws Exception {
+    public Reservation update(Reservation reservation) {
         Reservation dayToBeUpdated = reservationRepository.findOne(reservation.getId());
         dayToBeUpdated = reservation;
         return reservationRepository.save(dayToBeUpdated);
@@ -47,7 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public Reservation findById(long id) throws Exception {
+    public Reservation findById(long id) {
         return reservationRepository.findOne(id);
     }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters>
+            <converter type="com.vattenfall.dto.DateTimeCustomConverter">
+                <class-a>org.joda.time.DateTime</class-a>
+                <class-b>org.joda.time.DateTime</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
+
+    <mapping>
+        <class-a>com.vattenfall.model.User</class-a>
+        <class-b>com.vattenfall.dto.UserDto</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>com.vattenfall.model.Reservation</class-a>
+        <class-b>com.vattenfall.dto.ReservationDto</class-b>
+    </mapping>
+
+</mappings>

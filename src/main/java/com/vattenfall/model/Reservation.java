@@ -1,5 +1,6 @@
 package com.vattenfall.model;
 
+import org.dozer.Mapping;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -18,7 +19,7 @@ public class Reservation implements Comparable<Reservation> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RESERVATION_ID")
-    private long id;
+    private Long id;
 
     @Column(name = "DATE")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
@@ -28,18 +29,12 @@ public class Reservation implements Comparable<Reservation> {
     @NotNull
     private User holder;
 
-    public Reservation(DateTime date, User holder ) {
-        this.date = date;
-        this.holder = holder;
-    }
-
-    //Getters & Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public User getHolder() {
-        return holder;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public DateTime getDate() {
@@ -48,6 +43,14 @@ public class Reservation implements Comparable<Reservation> {
 
     public void setDate(DateTime date) {
         this.date = date;
+    }
+
+    public User getHolder() {
+        return holder;
+    }
+
+    public void setHolder(User holder) {
+        this.holder = holder;
     }
 
     @Override

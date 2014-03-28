@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(rollbackFor=UserNotFound.class)
+    @Transactional(rollbackFor = UserNotFound.class)
     public void delete(long id) throws UserNotFound {
         User userForDelete = userRepository.findOne(id);
         if(userForDelete == null) {
@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List findAll() {
-        return (List) userRepository.findAll();
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override

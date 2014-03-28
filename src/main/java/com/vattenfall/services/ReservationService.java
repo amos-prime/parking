@@ -10,8 +10,8 @@ import java.util.List;
 public interface ReservationService {
 
     public Reservation create(Reservation reservation);
-    public void delete(long id) throws Exception;
+    public void delete(long id);
     public List<Reservation> findAll();
-    public Reservation update(Reservation reservation) throws Exception;
-    public Reservation findById(long id) throws Exception;
+    public Reservation update(Reservation reservation);
+    public Reservation findById(long id);
 }

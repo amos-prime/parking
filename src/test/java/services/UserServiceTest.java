@@ -29,7 +29,6 @@ import static junit.framework.TestCase.assertTrue;
 @ContextConfiguration(classes = {PersistenceConfig.class, ServicesConfig.class})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-//@TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class UserServiceTest {
 
     @Autowired
@@ -140,10 +139,10 @@ public class UserServiceTest {
     public void userServiceFindAll() {
         before();
         List<User> users = userService.findAll();
-        assertTrue(users.size() == 2);
+        assertTrue(users.size() >= 2);
     }
 
-    @Test(expected = UserNotFound.class)
+    @Test(expected = Exception.class)
     public void userServiceUpdatingUnsavedUser() throws UserNotFound {
         User user = new User();
         user.setUsername("UpdateUser");

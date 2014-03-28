@@ -1,9 +1,7 @@
 package com.vattenfall.web.controller;
 
 import com.vattenfall.model.Parking;
-import com.vattenfall.model.User;
 import com.vattenfall.repository.ParkingRepository;
-import com.vattenfall.services.ParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +23,6 @@ public class MainController {
 
     @Autowired
     private ParkingRepository repository;
-    @Autowired
-    private ParkingService parkingService;
 
     @RequestMapping("/data")
     @ResponseBody

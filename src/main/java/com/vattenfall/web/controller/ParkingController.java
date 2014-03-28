@@ -1,7 +1,7 @@
 package com.vattenfall.web.controller;
 
 import com.vattenfall.model.User;
-import com.vattenfall.services.ParkingService;
+import com.vattenfall.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +19,11 @@ public class ParkingController {
     private static final Logger logger = Logger.getLogger(ParkingController.class);
 
     @Autowired
-    private ParkingService parkingService;
+    private UserService userService;
 
     @RequestMapping(value = "/parking", method = RequestMethod.GET)
     public String showParking(ModelMap model) {
-        List<User> holders = parkingService.getAllHolders();
-
+        List<User> holders = userService.findAll();
         model.addAttribute("holders", holders);
         return "ParkingView";
     }
@@ -32,7 +31,7 @@ public class ParkingController {
     @RequestMapping("/holders")
     @ResponseBody
     public List<User> showHolders() {
-        return parkingService.getAllHolders();
+        return userService.findAll();
     }
 
     @RequestMapping("/welcome")

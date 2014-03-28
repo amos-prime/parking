@@ -19,24 +19,31 @@ public class ReservationTest {
 
     @Test
     public void ParkingDayCompareToTest1() {
-        Reservation res1 = new Reservation(date1, user);
-        Reservation res2 = new Reservation(date2, user);
+        Reservation res1 = new Reservation();
+        res1.setDate(date1);
+        Reservation res2 = new Reservation();
+        res2.setDate(date2);
+
         int i = res1.compareTo(res2);
         assertTrue(i<0);
     }
 
     @Test
     public void ParkingDayCompareToTest2() {
-        Reservation res1 = new Reservation(date2, user);
-        Reservation res2 = new Reservation(date1, user);
+        Reservation res1 = new Reservation();
+        res1.setDate(date2);
+        Reservation res2 = new Reservation();
+        res2.setDate(date1);
         int i = res1.compareTo(res2);
         assertTrue(i>0);
     }
 
     @Test
     public void ParkingDayCompareToTest3() {
-        Reservation res1 = new Reservation(date1, user);
-        Reservation res2 = new Reservation(date1, user);
+        Reservation res1 = new Reservation();
+        res1.setDate(date1);
+        Reservation res2 = new Reservation();
+        res2.setDate(date1);
         int i = res1.compareTo(res2);
         assertTrue(i==0);
     }

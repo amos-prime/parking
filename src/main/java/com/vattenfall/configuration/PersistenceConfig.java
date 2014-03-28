@@ -1,12 +1,7 @@
 
 package com.vattenfall.configuration;
 
-import com.vattenfall.services.ParkingService;
-import com.vattenfall.services.ParkingServiceImpl;
-import com.vattenfall.services.UserService;
-import com.vattenfall.services.UserServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.hibernate.ejb.HibernatePersistence;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -14,9 +9,6 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -91,7 +83,7 @@ public class PersistenceConfig {
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, HIBERNATE_SHOW_SQL);
 //      properties.put(PROPERTY_NAME_HIBERNATE_SHOW_FORMAT_SQL, HIBERNATE_SHOW_FORMAT_SQL);
         properties.put(PROPERTY_NAME_HIBERNATE_USE_SQL_COMMENTS, HIBERNATE_USE_SQL_COMMENTS);
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "create-drop");
 /*      hbm2dll.auto properties
         validate: validate the schema, makes no changes to the database.
         update: update the schema.

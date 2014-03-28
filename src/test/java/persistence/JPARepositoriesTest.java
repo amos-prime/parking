@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -44,37 +45,29 @@ public class JPARepositoriesTest {
 
     @Test
     public void reservationRepositoryCreate() {
-        Reservation res = getTestReservation();
+        Reservation res = saveReservation();
         assertTrue(res.getId() != 0);
     }
 
     @Test
     public void reservationRepositoryDelete() {
-        Reservation res = getTestReservation();
+        Reservation res = saveReservation();
         long id = res.getId();
-        try {
-            reservationRepository.delete(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            assertTrue(false);
-        }
-        try {
-            reservationRepository.findOne(id);
-        } catch (Exception e) {
-            assertTrue(true);
-        }
+        reservationRepository.delete(id);
+        res = reservationRepository.findOne(id);
+        assertNull(res);
     }
 
     @Test
     public void reservationRepositoryFindAll() {
-        Reservation res = getTestReservation();
+        Reservation res = saveReservation();
         List<Reservation> reservations = reservationRepository.findAll();
         assertTrue(reservations.size() == 1);
     }
 
     @Test
     public void reservationRepositoryFindById() {
-        Reservation res = getTestReservation();
+        Reservation res = saveReservation();
         Reservation fetchedDay = reservationRepository.findOne(res.getId());
         assertTrue(fetchedDay != null);
         assertTrue(res.getId() == fetchedDay.getId());
@@ -87,14 +80,10 @@ public class JPARepositoriesTest {
     }
 
     @Test
-    public void  reservationEagerFetching() {
-        Reservation res = getTestReservation();
+    public void reservationEagerFetching() {
+        Reservation res = saveReservation();
         Reservation fetchedRes = null;
-        try {
-            fetchedRes = reservationRepository.findOne(res.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fetchedRes = reservationRepository.findOne(res.getId());
         assertTrue(res.getHolder().getId() == fetchedRes.getHolder().getId());
     }
 
@@ -106,11 +95,13 @@ public class JPARepositoriesTest {
         userRepository.save(user);
     }
 
-    private Reservation getTestReservation(){
-        return reservationRepository.save(new Reservation(date, getUser()));
+    private Reservation saveReservation() {
+        Reservation res = new Reservation();
+        res.setHolder(createUser());
+        return reservationRepository.save(res);
     }
 
-    private User getUser() {
+    private User createUser() {
         User user = new User();
         user.setUsername("UserName");
         user.setPassword("pass");

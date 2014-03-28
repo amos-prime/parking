@@ -78,7 +78,9 @@ public class ReservationServiceTest {
     @Test
     public void reservationServiceFindAll() {
         Reservation res = getTestReservation();
-        Reservation res2 = new Reservation(anotherDate, getUser());
+        Reservation res2 = new Reservation();
+        res2.setDate(anotherDate);
+        res2.setHolder(createUser());
         reservationService.create(res2);
 
         List<Reservation> reservations = reservationService.findAll();
@@ -94,11 +96,7 @@ public class ReservationServiceTest {
     public void reservationServiceFindById() {
         Reservation res = getTestReservation();
         Reservation fetchedRes = null;
-        try {
             fetchedRes = reservationService.findById(res.getId());
-        } catch (Exception e) {
-            assertTrue(false);
-        }
         assertTrue(fetchedRes != null);
         assertTrue(res.getId() == fetchedRes.getId());
     }
@@ -110,10 +108,13 @@ public class ReservationServiceTest {
     }
 
     private Reservation getTestReservation(){
-        return reservationService.create(new Reservation(date, getUser()));
+        Reservation res = new Reservation();
+        res.setDate(date);
+        res.setHolder(createUser());
+        return reservationService.create(res);
     }
 
-    private User getUser() {
+    private User createUser() {
         User user = new User();
         user.setUsername("UserName");
         user.setPassword("pass");

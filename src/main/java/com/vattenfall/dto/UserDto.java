@@ -1,28 +1,16 @@
-package com.vattenfall.model;
+package com.vattenfall.dto;
 
-
-import org.dozer.Mapping;
-
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import com.vattenfall.model.UserStatus;
 
 /**
- * Created by amoss on 20.12.13.
+ * Created by amoss on 27.03.14.
  */
-@Entity
-@Table(name = "USERS")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_ID")
+public class UserDto {
+
     private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private UserStatus status;
-
     private String username;
     private String password;
+    private UserStatus status;
     private Integer points;
 
     public Long getId() {
@@ -31,14 +19,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
     }
 
     public String getUsername() {
@@ -55,6 +35,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public Integer getPoints() {
