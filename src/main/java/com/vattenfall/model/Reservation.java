@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "RESERVATIONS")
-public class Reservation implements Comparable<Reservation> {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RESERVATION_ID")
@@ -51,11 +51,6 @@ public class Reservation implements Comparable<Reservation> {
 
     public void setHolder(User holder) {
         this.holder = holder;
-    }
-
-    @Override
-    public int compareTo(Reservation thatReservation) {
-        return this.date.compareTo(thatReservation.date);
     }
 
 }

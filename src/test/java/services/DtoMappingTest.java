@@ -68,15 +68,24 @@ public class DtoMappingTest {
         res.setId(Long.MAX_VALUE);
 
         ReservationDto resDto = mapper.map(res, ReservationDto.class);
-        assertTrue(res.getId() == resDto.getId());
-        assertTrue(res.getHolder().getId() == resDto.getHolder().getId());
+        assertTrue(res.getId().equals(resDto.getId()));
+        assertTrue(res.getHolder().getId().equals(resDto.getHolder().getId()));
         assertTrue(res.getDate().equals(resDto.getDate()));
 
     }
 
     @Test
     public void ReservationToDomain() {
+        UserDto userDto = mapper.map(createUser(), UserDto.class);
+        ReservationDto resDto = new ReservationDto();
+        resDto.setDate(new DateTime().withDate(2014, 3, 27));
+        resDto.setId(Long.MAX_VALUE);
+        resDto.setHolder(userDto);
 
+        Reservation res = mapper.map(resDto, Reservation.class);
+        assertTrue(res.getId().equals(resDto.getId()));
+        assertTrue(res.getHolder().getId().equals(resDto.getHolder().getId()));
+        assertTrue(res.getDate().equals(resDto.getDate()));
     }
 
     private User createUser() {

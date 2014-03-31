@@ -1,8 +1,9 @@
 import com.vattenfall.model.Reservation;
 import com.vattenfall.model.User;
+import com.vattenfall.utils.ReservationByDateComparator;
 import org.joda.time.DateTime;
 import org.junit.Test;
-
+import java.util.Collections.*;
 
 import java.util.*;
 
@@ -18,36 +19,17 @@ public class ReservationTest {
     User user = new User();
 
     @Test
-    public void ParkingDayCompareToTest1() {
+    public void reservationSorting() {
         Reservation res1 = new Reservation();
         res1.setDate(date1);
         Reservation res2 = new Reservation();
         res2.setDate(date2);
+        List<Reservation> list = new ArrayList<Reservation>();
+        list.add(res2);
+        list.add(res1);
+        Collections.sort(list, new ReservationByDateComparator());
 
-        int i = res1.compareTo(res2);
-        assertTrue(i<0);
+        assertTrue(list.get(0).equals(res1));
     }
-
-    @Test
-    public void ParkingDayCompareToTest2() {
-        Reservation res1 = new Reservation();
-        res1.setDate(date2);
-        Reservation res2 = new Reservation();
-        res2.setDate(date1);
-        int i = res1.compareTo(res2);
-        assertTrue(i>0);
-    }
-
-    @Test
-    public void ParkingDayCompareToTest3() {
-        Reservation res1 = new Reservation();
-        res1.setDate(date1);
-        Reservation res2 = new Reservation();
-        res2.setDate(date1);
-        int i = res1.compareTo(res2);
-        assertTrue(i==0);
-    }
-
-
 
 }
