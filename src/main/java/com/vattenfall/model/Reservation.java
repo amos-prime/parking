@@ -26,7 +26,6 @@ public class Reservation {
     private DateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @NotNull
     private User holder;
 
     public Long getId() {

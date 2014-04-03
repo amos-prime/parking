@@ -83,7 +83,7 @@ public class PersistenceConfig {
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, HIBERNATE_SHOW_SQL);
 //      properties.put(PROPERTY_NAME_HIBERNATE_SHOW_FORMAT_SQL, HIBERNATE_SHOW_FORMAT_SQL);
         properties.put(PROPERTY_NAME_HIBERNATE_USE_SQL_COMMENTS, HIBERNATE_USE_SQL_COMMENTS);
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "update");
 /*      hbm2dll.auto properties
         validate: validate the schema, makes no changes to the database.
         update: update the schema.
